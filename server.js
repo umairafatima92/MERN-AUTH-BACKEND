@@ -15,7 +15,7 @@ const port = process.env.PORT || 8000;
 
 connectDB()
   .then(() => {
-    console.log("✅ Database connection successful");
+    console.log(" Database connection successful");
     
     
     app.listen(port, () => {
@@ -24,7 +24,7 @@ connectDB()
     });
   })
   .catch((error) => {
-    console.error("❌ Failed to connect to database:", error);
+    console.error(" Failed to connect to database:", error);
     process.exit(1);
   });
 
@@ -62,7 +62,7 @@ app.use("/api/user", userRouter);
 
 
 app.use((err, req, res, next) => {
-  console.error("❌ Error:", err);
+  console.error(" Error:", err);
   res.status(500).json({ 
     success: false, 
     message: err.message || "Internal server error" 
