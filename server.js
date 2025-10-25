@@ -1,4 +1,4 @@
-// server/server.js
+
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -12,15 +12,15 @@ import userRouter from "./routes/userRoutes.js";
 const app = express();
 const port = process.env.PORT || 8000;
 
-// ✅ Connect to database BEFORE starting server
+
 connectDB()
   .then(() => {
     console.log("✅ Database connection successful");
     
-    // Start server only after DB connects
+    
     app.listen(port, () => {
-      console.log(`🚀 Server started on PORT: ${port}`);
-      console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
+      console.log(` Server started on PORT: ${port}`);
+      console.log(` Environment: ${process.env.NODE_ENV || 'development'}`);
     });
   })
   .catch((error) => {
@@ -31,21 +31,22 @@ connectDB()
 const allowedOrigins = [
   "http://localhost:5173",
   "https://mern-auth-frontend-gray.vercel.app",
-  process.env.FRONTEND_URL // Add this to your .env
-].filter(Boolean); // Remove undefined values
+  process.env.FRONTEND_URL 
+].filter(Boolean); 
 
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ 
   origin: function(origin, callback) {
-    // Allow requests with no origin (mobile apps, Postman, etc.)
+
+
     if (!origin) return callback(null, true);
     
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      console.log("❌ Blocked by CORS:", origin);
+      console.log("Blocked by CORS:", origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -59,7 +60,7 @@ app.get("/", (req, res) => res.send("API working"));
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 
-// ✅ Add error handling middleware
+
 app.use((err, req, res, next) => {
   console.error("❌ Error:", err);
   res.status(500).json({ 
